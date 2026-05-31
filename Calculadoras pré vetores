@@ -1,0 +1,285 @@
+using System.Globalization;
+
+
+
+string R = "R";
+while (R == "R")
+{
+    Console.WriteLine("### Selecione uma das opções abaixo: ###");
+    Console.WriteLine("1. Calculadoras Trabalhistas.");
+    Console.WriteLine("2. Calculadoras Automotivas.");
+    Console.WriteLine("3. Calculadoras Financeiras.");
+    string X = Console.ReadLine();
+
+
+
+    switch (X)
+    {
+        case "1":
+            Console.WriteLine("### Calculadoras Trabalhistas: ###");
+            Console.WriteLine("1. Calculadora de Ferias.");
+            Console.WriteLine("2. Ferias Proporcional.");
+            Console.WriteLine("3. Recisão Trabalhista.(sem justa causa)");
+            Console.WriteLine("4. Calculo Seguro Desemprego.");
+
+            string Y = Console.ReadLine();
+            if (Y == "1")
+            {
+                double umTerço, ValorBruto, ValorLiquido, descontoINSS, SalarioDiario, TotalAbono;
+                Console.WriteLine("Digite seu Salário Base: ");
+                double salarioBase = double.Parse(Console.ReadLine());
+                umTerço = salarioBase / 3;
+                ValorBruto = salarioBase + umTerço;
+                Console.WriteLine("Valor bruto: R$ " + ValorBruto.ToString("F2", CultureInfo.InvariantCulture));
+                if (ValorBruto <= 2902)
+                {
+                    descontoINSS = ValorBruto * 0.09;
+                    ValorLiquido = ValorBruto - descontoINSS;
+                    Console.WriteLine("Valor Liquido: R$ " + ValorLiquido.ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine("Valor do desconto INSS: R$ " + descontoINSS.ToString("F2", CultureInfo.InvariantCulture));
+                }
+                if (ValorBruto <= 4354)
+                {
+                    descontoINSS = ValorBruto * 0.12;
+                    ValorLiquido = ValorBruto - descontoINSS;
+                    Console.WriteLine("Valor Liquido: R$ " + ValorLiquido.ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine("Valor do desconto INSS: R$ " + descontoINSS.ToString("F2", CultureInfo.InvariantCulture));
+                }
+                else
+                {
+                    descontoINSS = ValorBruto * 0.14;
+                    ValorLiquido = ValorBruto - descontoINSS;
+                    Console.WriteLine("Valor Liquido: R$ " + ValorLiquido.ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine("Valor do desconto INSS: R$ " + descontoINSS.ToString("F2", CultureInfo.InvariantCulture));
+                }
+                Console.WriteLine("Abono pecuniario? Digite: S/N");
+                X = Console.ReadLine();
+                if (X == "S")
+                {
+                    SalarioDiario = ValorBruto / 30;
+                    TotalAbono = SalarioDiario * 10;
+                    Console.WriteLine("Valor dos 10 dias vendidos: " + TotalAbono.ToString("F2", CultureInfo.InvariantCulture));
+                }
+            }
+            if (Y == "2")
+            {
+                double Salario, SalarioProporcional, ValorProporcional, UmTerço, ValorBruto;
+                int meses;
+                Console.WriteLine("Digite seu salário + meses trabalhados: ");
+                string[] vet = Console.ReadLine().Split(' ');
+                Salario = double.Parse(vet[0]);
+                meses = int.Parse(vet[1]);
+                SalarioProporcional = Salario / 12;
+                ValorProporcional = SalarioProporcional * meses;
+                UmTerço = ValorProporcional / 3;
+                ValorBruto = UmTerço + ValorProporcional;
+                Console.WriteLine("Valor bruto a receber proporcionalmente a " + meses + " meses é de R$ " + ValorBruto.ToString("F2", CultureInfo.InvariantCulture));
+            }
+            if (Y == "3")
+            {
+                double Salario, SaldoSalario, decimo, ferias, inss;
+                int diaDoMes, meses;
+                Console.WriteLine("Digite o seu ultimo salário + o dia do mês (1 a 31) que ocorreu o desligamento: ");
+                string[] vet = Console.ReadLine().Split(' ');
+                Salario = double.Parse(vet[0]);
+                diaDoMes = int.Parse(vet[1]);
+                SaldoSalario = (Salario / 30) * diaDoMes;
+                Console.WriteLine("Digite a quantidade de meses trabalhados no ano corrente: ");
+                meses = int.Parse(Console.ReadLine());
+                decimo = (Salario / 12) * meses;
+                ferias = (Salario / 12) * meses + (Salario / 3);
+                if (Salario <= 2902) { inss = Salario * 0.09; }
+                if (Salario <= 4354) { inss = Salario * 0.12; }
+                else { inss = Salario * 0.14; }
+                Console.WriteLine("Aviso previo indenizado? S/N");
+                string a = Console.ReadLine();
+                if (a == "S")
+                {
+                    Console.WriteLine("Saldo salário: R$ " + SaldoSalario.ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine("Aviso prévio indenizado: R$" + Salario.ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine("Décimo terceiro proporcional: R$ " + decimo.ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine("Férias proporcionais: R$ " + ferias.ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine();
+                    Console.WriteLine("Total Bruto: R$ " + (SaldoSalario + Salario + decimo + ferias).ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine();
+                    Console.WriteLine("Desconto INSS: R$ " + inss.ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine("Total Líquido: R$ " + (SaldoSalario + Salario + decimo + ferias - inss).ToString("F2", CultureInfo.InvariantCulture));
+                }
+                else
+                {
+                    Console.WriteLine("Saldo salário: R$ " + SaldoSalario.ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine("Décimo terceiro proporcional: R$ " + decimo.ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine("Férias proporcionais: R$ " + ferias.ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine();
+                    Console.WriteLine("Total Bruto: R$ " + (SaldoSalario + decimo + ferias).ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine();
+                    Console.WriteLine("Desconto INSS: R$ " + inss.ToString("F2", CultureInfo.InvariantCulture));
+                    Console.WriteLine("Total Líquido: R$ " + (SaldoSalario + decimo + ferias - inss).ToString("F2", CultureInfo.InvariantCulture));
+                }
+
+            }
+            if (Y == "4")
+            {
+                double Salario1, Salario2, Salario3, media;
+                int Meses;
+                Console.WriteLine("Digite seus ultimos três salários: ");
+                string[] vet = Console.ReadLine().Split(' ');
+                Salario1 = double.Parse(vet[0]);
+                Salario2 = double.Parse(vet[1]);
+                Salario3 = double.Parse(vet[2]);
+                Console.WriteLine("Digite seu tempo total trabalhado em meses: ");
+                Meses = int.Parse(Console.ReadLine());
+
+                media = (Salario1 + Salario2 + Salario3) / 3;
+                if (media <= 2.222)
+                {
+                    if (media <= 1621) { media = 1621; }
+                    else
+                    {
+                        media = media * 0.80;
+                    }
+                }
+                if (media <= 3703)
+                {
+                    if (media >= 2222)
+                        media = (media - 2222) * 0.50 + 1777;
+                }
+                if (media > 3703) { media = 2518; }
+
+                if (Meses <= 11) { Console.WriteLine("Você receberá 3 parcelas de R$ " + media.ToString("F2", CultureInfo.InvariantCulture)); }
+                if (Meses <= 23) { Console.WriteLine("Você receberá 4 parcelas de R$ " + media.ToString("F2", CultureInfo.InvariantCulture)); }
+                else { Console.WriteLine("Você receberá 5 parcelas de R$ " + media.ToString("F2", CultureInfo.InvariantCulture)); }
+            }
+
+            break;
+
+        case "2":
+            Console.WriteLine("### Calculadoras Automotivas. ###");
+            Console.WriteLine("1. Consumo médio KM/L.");
+            Console.WriteLine("2. Veiculo Combustível vs Elétrico.");
+            X = Console.ReadLine();
+
+            if (X == "1")
+            {
+                Console.WriteLine("Seu carro é a combustivel? S/N");
+                string A = Console.ReadLine();
+                if (A == "s")
+                {
+                    int km, litros, kml;
+
+                    Console.WriteLine("Digite a distancia em km + quantidade de litros para saber o consumo médio: ");
+                    string[] vet = Console.ReadLine().Split(' ');
+                    km = int.Parse(vet[0]);
+                    litros = int.Parse(vet[1]);
+                    kml = km / litros;
+                    Console.WriteLine("Seu carro faz " + kml + " km/l");
+                }
+                else
+                {
+                    int km, litros, kml;
+
+                    Console.WriteLine("Digite a distancia em km + quantidade de kWh para saber o consumo médio: ");
+                    string[] vet = Console.ReadLine().Split(' ');
+                    km = int.Parse(vet[0]);
+                    litros = int.Parse(vet[1]);
+                    kml = km / litros;
+                    Console.WriteLine("Seu carro faz " + kml + " Km/kWh");
+                }
+
+            }
+            if (X == "2")
+            {
+                int kmtotal, kml, kmkWh;
+                double precoCombustivel, precoEnergia, consumoMensalComb, CustokmComb, ConsumoMensalEner, CustoKmEner, gastomensalcomb, gastomensalener;
+                Console.WriteLine("Digite a quantidade de KM rodados por ano para a comparação: ");
+                kmtotal = int.Parse(Console.ReadLine());
+                Console.WriteLine("Digite o consumo médio + preço do combustivel do veiculo");
+                string[] vet = Console.ReadLine().Split(' ');
+                kml = int.Parse(vet[0]);
+                precoCombustivel = double.Parse(vet[1]);
+                Console.WriteLine("Digite o consumo médio(km/kWh) + preço da energia do veiculo");
+                string[] vet2 = Console.ReadLine().Split(' ');
+                kmkWh = int.Parse(vet2[0]);
+                precoEnergia = double.Parse(vet2[1]);
+
+                kmtotal = kmtotal / 12;
+
+                consumoMensalComb = kmtotal / kml;
+                CustokmComb = precoCombustivel / kml;
+                gastomensalcomb = consumoMensalComb * precoCombustivel;
+
+
+
+                ConsumoMensalEner = kmtotal / kmkWh;
+                CustoKmEner = precoEnergia / kmkWh;
+                gastomensalener = ConsumoMensalEner * precoEnergia;
+
+                Console.WriteLine("Veículo a Combustível:");
+                Console.WriteLine();
+                Console.WriteLine("Gasto mensal: R$ " + gastomensalcomb.ToString("F2", CultureInfo.InvariantCulture));
+                Console.WriteLine("Consumo mensal: " + consumoMensalComb.ToString("F2", CultureInfo.InvariantCulture) + " Litros");
+                Console.WriteLine("Custo por km: R$ " + CustokmComb.ToString("F2", CultureInfo.InvariantCulture));
+
+                Console.WriteLine();
+
+                Console.WriteLine("Veículo Elétrico");
+                Console.WriteLine();
+                Console.WriteLine("Gasto mensal: R$ " + gastomensalener.ToString("F2", CultureInfo.InvariantCulture));
+                Console.WriteLine("Consumo mensal: " + ConsumoMensalEner.ToString("F2", CultureInfo.InvariantCulture) + " kWh");
+                Console.WriteLine("Custo por km: R$ " + CustoKmEner.ToString("F2", CultureInfo.InvariantCulture));
+
+                if (gastomensalcomb > gastomensalener)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Você economizará mais com carro elétrico");
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Você economizará mais com carro a combustão");
+                }
+
+                Console.WriteLine();
+                double menor = Math.Min(gastomensalcomb, gastomensalener);
+                double maior = Math.Max(gastomensalcomb, gastomensalener);
+
+                Console.WriteLine("DIFERENÇA");
+                Console.WriteLine();
+                Console.WriteLine("Economia mensal +R$ " + (maior - menor).ToString("F2", CultureInfo.InvariantCulture));
+                Console.WriteLine("Economia anual +R$ " + ((maior - menor) * 12).ToString("F2", CultureInfo.InvariantCulture));
+
+            }
+            break;
+
+        case "3":
+            Console.WriteLine("### Calculadoras Financeiras. ###");
+            Console.WriteLine("1. Calculadora Juros Compostos."); //NÃO FUNCIONA NÃO SEI PORQUE//
+            X = Console.ReadLine();
+
+            if (X == "1")
+            {
+                double CapitalInicial, MontanteFinal, Aporte, taxa;
+                int tempo;
+                Console.WriteLine("Digite o valor inicial + Taxa de juros anual e o perido em anos");
+                string[] vet = Console.ReadLine().Split(' ');
+                CapitalInicial = double.Parse(vet[0]);
+                taxa = double.Parse(vet[1]);
+                tempo = int.Parse(vet[2]);
+
+                tempo = tempo * 12; 
+                taxa = taxa / 12; // Aqui é o problema //
+
+                MontanteFinal = CapitalInicial * (Math.Pow((1 + taxa), tempo));
+
+                Console.WriteLine(MontanteFinal.ToString("F2", CultureInfo.InvariantCulture));
+
+            }
+            break;
+    }
+    Console.WriteLine();
+    Console.WriteLine("Digite R para retornar ao Menu Inicial");
+    R = Console.ReadLine();
+
+}
+
+// Melhorias sugeridas pelo robo: encadeamento do if else e utilizar console.clear para limpar após cada break; alterar calculo da taxa para taxa = (taxa / 100) / 12; para ser funcional// 
